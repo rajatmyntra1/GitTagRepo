@@ -67,15 +67,14 @@ jobs:
             echo "Inside if block"
             git checkout release
             release_minor=$((release_minor + 1))
-            timestamp=$(date +"%d-%m-%y-%H-%M-%S")
-            git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
-            git push origin "$release_major.$release_minor.0-${timestamp}"
+            COUNTER_DIGIT="${release_tag##*rc}"
+            git tag -a "$release_major.$release_minor.0-$COUNTER_DIGIT" release -m "New Release: "
+            git push origin "$release_major.$release_minor.0-${COUNTER_DIGIT}"
           else
             echo "Inside else block"
             git checkout release
-            timestamp=$(date +"%d-%m-%y-%H-%M-%S")
-            git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
-            git push origin "$release_major.$release_minor.0-${timestamp}"
+            git tag -a "$release_major.$release_minor.0-rc1" release -m "New Release: "
+            git push origin "$release_major.$release_minor.0-rc1"
           fi
         elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
