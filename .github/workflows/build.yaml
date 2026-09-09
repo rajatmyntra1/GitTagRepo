@@ -72,14 +72,14 @@ jobs:
           fi
         elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
-          git tag -a $release_major.$release_minor.0 release -m "New Release: Prod"
+          git tag -a $release_major.$release_minor.0 main -m "New Release: Prod"
           git push origin "$release_major.$release_minor.0"
           
         elif [[ ${{ github.head_ref }} != 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
           git pull origin main
           PATCH_VERSION=$(( patch + 1 ))
-          git tag -a $release_major.$release_minor.$PATCH_VERSION release -m "New Release: Prod"
+          git tag -a $release_major.$release_minor.$PATCH_VERSION main -m "New Release: Prod"
           git push origin "$release_major.$release_minor.$PATCH_VERSION"
         fi
 
