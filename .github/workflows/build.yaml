@@ -34,6 +34,11 @@ jobs:
         echo "Latest tag: $release_tag"   
         echo "release_tag=$release_tag" >> $GITHUB_ENV
 
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    
     - name: fetch_tags
       run: |
         # 2. Strip the hyphen '-' and everything after it (removes -rc1, -rc.2, etc.)
