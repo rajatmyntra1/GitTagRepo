@@ -58,7 +58,7 @@ jobs:
       run: |
         if [[ github.base_ref == 'release' ]]; then
           if [[ $release_major -eq $release && $release_minor -eq $minor ]]; then
-            echo "Inside else block"
+            echo "Inside if block"
             git checkout release
             release_minor=$((release_minor + 1))
             timestamp=$(date +"%d-%m-%y-%H-%M-%S")
