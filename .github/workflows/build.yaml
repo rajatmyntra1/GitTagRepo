@@ -68,6 +68,7 @@ jobs:
             git checkout release
             release_minor=$((release_minor + 1))
             COUNTER_DIGIT="${release_tag##*rc}"
+            COUNTER_DIGIT=$(( COUNTER_DIGIT +1 ))
             git tag -a "$release_major.$release_minor.0-$COUNTER_DIGIT" release -m "New Release: "
             git push origin "$release_major.$release_minor.0-${COUNTER_DIGIT}"
           else
