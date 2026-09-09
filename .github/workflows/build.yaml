@@ -1,0 +1,94 @@
+name: build
+on:
+  pull_request:
+    types: closed
+
+permissions:
+  contents: write
+
+jobs:
+  build_main:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+        ref: main
+        
+    - name: list_tags
+      run: |
+        git fetch --tags
+        main_tag=$(git describe --tags --abbrev=0)
+        echo "Latest tag: $main_tag"
+        echo "main_tag=$main_tag" >> $GITHUB_ENV
+        
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+        ref: release
+        
+    - name: release_list_tags
+      run: |
+        git fetch --tags
+        release_tag=$(git describe --tags --abbrev=0)
+        echo "Latest tag: $release_tag"   
+        echo "release_tag=$release_tag" >> $GITHUB_ENV
+
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    
+    - name: fetch_tags
+      run: |
+        # 2. Strip the hyphen '-' and everything after it (removes -rc1, -rc.2, etc.)
+        clean_release_tag="${release_tag%%-*}"
+        echo $clean_release_tag
+        # 3. Split the remaining '1.2.3' by dot into variables
+        IFS='.' read -r release_major release_minor release_patch <<< "$clean_release_tag"
+        
+        # Output the results
+        echo "Release Major: $release_major"
+        echo "Release Minor: $release_minor"
+        echo "Release Patch: $release_patch"
+
+        IFS='.' read -r major minor patch <<< "$main_tag"
+        
+        # Output the results
+        echo "Major: $major"
+        echo "Minor: $minor"
+        echo "Patch: $patch"
+        
+        if [[ ${{github.base_ref }} == 'release' ]]; then
+          if [[ $release_major -eq $release && $release_minor -eq $minor ]]; then
+            echo "Inside if block"
+            git checkout release
+            release_minor=$((release_minor + 1))
+            git tag -a "$release_major.$release_minor.0-rc1" release -m "New Release: "
+            git push origin "$release_major.$release_minor.0-rc1"
+          else
+            echo "Inside else block"
+            git checkout release
+            COUNTER_DIGIT="${release_tag##*rc}"
+            COUNTER_DIGIT=$(( COUNTER_DIGIT + 1 ))
+            git tag -a "$release_major.$release_minor.0-rc$COUNTER_DIGIT" release -m "New Release: "
+            git push origin "$release_major.$release_minor.0-rc$COUNTER_DIGIT"
+          fi
+        elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }} == 'main' ]]; then
+          git checkout main
+          git tag -a $release_major.$release_minor.0 release -m "New Release: Prod"
+          git push origin "$release_major.$release_minor.0"
+        fi
+
+          
+
+          
+        
+        
+        
+      
+    
+    
