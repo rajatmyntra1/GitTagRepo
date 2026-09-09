@@ -60,7 +60,8 @@ jobs:
           if [[ $release_major -eq $release && $release_minor -eq $minor ]]; then
             git checkout release
             release_minor=$((release_minor + 1))
-            git tag -a $release_major.$release_minor.0 release -m "New Release: "
+            timestamp=$(date +"%d-%m-%y-%H-%M-%S")
+            git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
             git push $release_major.$release_minor.0
           else
             echo "No Changes Required."
