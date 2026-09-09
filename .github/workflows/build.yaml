@@ -62,9 +62,13 @@ jobs:
             release_minor=$((release_minor + 1))
             timestamp=$(date +"%d-%m-%y-%H-%M-%S")
             git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
-            git push $release_major.$release_minor.0
+            git push "$release_major.$release_minor.0-${timestamp}"
           else
-            echo "No Changes Required."
+            git checkout release
+            timestamp=$(date +"%d-%m-%y-%H-%M-%S")
+            git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
+            git push "$release_major.$release_minor.0-${timestamp}"
+            
           fi
         elif [[ github.head_ref == 'release' && github.base_ref == 'main' ]]; then
           git checkout main
