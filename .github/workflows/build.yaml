@@ -63,7 +63,7 @@ jobs:
         echo "Patch: $patch"
         
         if [[ ${{github.base_ref }} == 'release' ]]; then
-          if [[ $release_major -eq $release && $release_minor -eq $minor ]]; then
+          if [[ $release_major -eq $major && $release_minor -eq $minor ]]; then
             echo "Inside if block"
             git checkout release
             release_minor=$((release_minor + 1))
@@ -81,6 +81,12 @@ jobs:
           git checkout main
           git tag -a $release_major.$release_minor.0 release -m "New Release: Prod"
           git push origin "$release_major.$release_minor.0"
+          
+        elif [[ ${{ github.head_ref }} != 'release' && ${{ github.base_ref }} == 'main' ]]; then
+          git checkout main
+          PATCH_VERSION=$(( patch + 1 ))
+          git tag -a $release_major.$release_minor.$PATCH_VERSION release -m "New Release: Prod"
+          git push origin "$release_major.$release_minor.$PATCH_VERSION"
         fi
 
           
