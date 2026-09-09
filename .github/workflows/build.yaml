@@ -21,48 +21,38 @@ jobs:
         echo "Latest tag: $main_tag"
         echo "main_tag=main_tag" >> $GITHUB_ENV
         
-  build_release:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         fetch-tags: true
         ref: release
         
-    - name: list_tags
+    - name: release_list_tags
       run: |
         git fetch --tags
         release_tag=$(git describe --tags --abbrev=0)
         echo "Latest tag: $release_tag"   
         echo "release_tag=release_tag" >> $GITHUB_ENV
 
-  fetch_tags:
-    runs-on: ubuntu-latest
-    steps:
-      - name: fetch_tags
-        run: |
-          # 2. Strip the hyphen '-' and everything after it (removes -rc1, -rc.2, etc.)
-          clean_release_tag="${release_tag%%-*}"
-          # 3. Split the remaining '1.2.3' by dot into variables
-          IFS='.' read -r release_major release_minor release_patch <<< "$clean_release_tag"
-          
-          # Output the results
-          echo "Release Major: $release_major"
-          echo "Release Minor: $release_minor"
-          echo "Release Patch: $release_patch"
+    - name: fetch_tags
+      run: |
+        # 2. Strip the hyphen '-' and everything after it (removes -rc1, -rc.2, etc.)
+        clean_release_tag="${release_tag%%-*}"
+        # 3. Split the remaining '1.2.3' by dot into variables
+        IFS='.' read -r release_major release_minor release_patch <<< "$clean_release_tag"
+        
+        # Output the results
+        echo "Release Major: $release_major"
+        echo "Release Minor: $release_minor"
+        echo "Release Patch: $release_patch"
 
-          IFS='.' read -r major minor patch <<< "$main_tag"
-          
-          # Output the results
-          echo "Major: $major"
-          echo "Minor: $minor"
-          echo "Patch: $patch"
+        IFS='.' read -r major minor patch <<< "$main_tag"
+        
+        # Output the results
+        echo "Major: $major"
+        echo "Minor: $minor"
+        echo "Patch: $patch"
 
-  compare_tags:
-   runs-on: ubuntu-latest
-   steps:
     - name: compare
       run: |
         if [[ github.base_ref == 'release' ]]; then
