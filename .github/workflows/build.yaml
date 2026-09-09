@@ -53,9 +53,7 @@ jobs:
         echo "Major: $major"
         echo "Minor: $minor"
         echo "Patch: $patch"
-
-    - name: compare
-      run: |
+        
         if [[ ${{github.base_ref }} == 'release' ]]; then
           if [[ $release_major -eq $release && $release_minor -eq $minor ]]; then
             echo "Inside if block"
