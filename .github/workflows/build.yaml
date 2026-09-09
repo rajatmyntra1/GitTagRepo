@@ -15,7 +15,6 @@ jobs:
       with:
         fetch-depth: 0
         fetch-tags: true
-        ref: main
         
     - name: list_tags
       run: |
@@ -23,12 +22,6 @@ jobs:
         main_tag=$(git describe --tags --abbrev=0)
         echo "Latest tag: $main_tag"
         echo "main_tag=$main_tag" >> $GITHUB_ENV
-        
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        fetch-tags: true
-        ref: release
         
     - name: release_list_tags
       run: |
