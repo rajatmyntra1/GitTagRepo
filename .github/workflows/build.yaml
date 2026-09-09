@@ -38,6 +38,7 @@ jobs:
       run: |
         # 2. Strip the hyphen '-' and everything after it (removes -rc1, -rc.2, etc.)
         clean_release_tag="${release_tag%%-*}"
+        echo $clean_release_tag
         # 3. Split the remaining '1.2.3' by dot into variables
         IFS='.' read -r release_major release_minor release_patch <<< "$clean_release_tag"
         
