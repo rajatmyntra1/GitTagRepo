@@ -19,7 +19,7 @@ jobs:
         git fetch --tags
         main_tag=$(git describe --tags --abbrev=0)
         echo "Latest tag: $main_tag"
-        echo "main_tag=main_tag" >> $GITHUB_ENV
+        echo "main_tag=$main_tag" >> $GITHUB_ENV
         
     - uses: actions/checkout@v4
       with:
@@ -32,7 +32,7 @@ jobs:
         git fetch --tags
         release_tag=$(git describe --tags --abbrev=0)
         echo "Latest tag: $release_tag"   
-        echo "release_tag=release_tag" >> $GITHUB_ENV
+        echo "release_tag=$release_tag" >> $GITHUB_ENV
 
     - name: fetch_tags
       run: |
