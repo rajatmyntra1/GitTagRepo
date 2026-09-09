@@ -71,7 +71,7 @@ jobs:
             git tag -a "$release_major.$release_minor.0-${timestamp}" release -m "New Release: "
             git push "$release_major.$release_minor.0-${timestamp}"
           fi
-        elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }}== 'main' ]]; then
+        elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
           git tag -a $release_major.$release_minor.0 release -m "New Release: Prod"
           git push origin "$release_major.$release_minor.0"
