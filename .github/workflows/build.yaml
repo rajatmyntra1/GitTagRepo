@@ -15,7 +15,6 @@ jobs:
       with:
         fetch-depth: 0
         fetch-tags: true
-        ref: main
         
     - name: list_tags
       run: |
@@ -23,12 +22,6 @@ jobs:
         main_tag=$(git describe --tags --abbrev=0)
         echo "Latest tag: $main_tag"
         echo "main_tag=$main_tag" >> $GITHUB_ENV
-        
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        fetch-tags: true
-        ref: release
         
     - name: release_list_tags
       run: |
@@ -79,13 +72,14 @@ jobs:
           fi
         elif [[ ${{ github.head_ref }} == 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
-          git tag -a $release_major.$release_minor.0 release -m "New Release: Prod"
+          git tag -a $release_major.$release_minor.0 main -m "New Release: Prod"
           git push origin "$release_major.$release_minor.0"
           
         elif [[ ${{ github.head_ref }} != 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
+          git pull origin main
           PATCH_VERSION=$(( patch + 1 ))
-          git tag -a $release_major.$release_minor.$PATCH_VERSION release -m "New Release: Prod"
+          git tag -a $release_major.$release_minor.$PATCH_VERSION main -m "New Release: Prod"
           git push origin "$release_major.$release_minor.$PATCH_VERSION"
         fi
 
