@@ -84,6 +84,7 @@ jobs:
           
         elif [[ ${{ github.head_ref }} != 'release' && ${{ github.base_ref }} == 'main' ]]; then
           git checkout main
+          git pull origin main
           PATCH_VERSION=$(( patch + 1 ))
           git tag -a $release_major.$release_minor.$PATCH_VERSION release -m "New Release: Prod"
           git push origin "$release_major.$release_minor.$PATCH_VERSION"
