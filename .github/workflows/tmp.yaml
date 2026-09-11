@@ -12,6 +12,13 @@ jobs:
       - name: useparam
         run: |
           echo $n,$l
+  param_jobs:
+    needs: paramters
+    runs-on: ubuntu-latest
+    steps:
+      - name: using_param_job
+        run: |
+          echo $n,$l
   tmp:
     runs-on: ubuntu-latest
     steps:
