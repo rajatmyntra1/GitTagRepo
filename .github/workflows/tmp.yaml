@@ -1,6 +1,17 @@
 name: tmp
 on: push
 jobs:
+
+  paramters:
+    runs-on: ubuntu-latest
+    steps:
+      - name: param
+        run: |
+          echo "n=rajatenv" > GITHUB_ENV
+          echo "l=bhawsarenv" > GITHUB_ENV
+      - name: useparam
+        run: |
+          echo $n,$l
   tmp:
     runs-on: ubuntu-latest
     steps:
@@ -17,6 +28,5 @@ jobs:
         run: |
           echo $name,$lastname
           echo ${{env.name }} ${{env.lastname}}
-          echo ${{name}} ${{lastname}}
 
       
