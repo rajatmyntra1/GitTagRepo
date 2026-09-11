@@ -18,7 +18,6 @@ jobs:
   param_jobs:
     needs: paramters
     runs-on: ubuntu-latest
-    env:
       
     steps:
       - name: using_param_job
