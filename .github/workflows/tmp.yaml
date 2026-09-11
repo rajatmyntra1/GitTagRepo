@@ -7,3 +7,15 @@ jobs:
       - name: tmp_step
         run: |
           echo ${{vars.MAJOR_RELEASE_VERSION }}
+  tmp_env:
+    runs-on: ubuntu-latest
+    env:
+      name: rajat
+      lastname: bhawsar
+    steps:
+      - name: env_tmp_task
+        run: |
+          echo $name,$lastname
+          echo ${{env.name }} ${{env.lastname}}
+
+      
