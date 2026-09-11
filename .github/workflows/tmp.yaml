@@ -14,7 +14,7 @@ jobs:
           echo "l=bhawsarenv" >> $GITHUB_OUTPUT
       - name: useparam
         run: |
-          echo ${{needs.paramters.outputs.n}}, ${{needs.paramters.outputs.l }}
+          echo "${{needs.paramters.outputs.n}}"
   param_jobs:
     needs: paramters
     runs-on: ubuntu-latest
