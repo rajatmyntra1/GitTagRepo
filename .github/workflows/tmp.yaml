@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: param
         run: |
-          echo "n=rajatenv" > $GITHUB_ENV
-          echo "l=bhawsarenv" > $GITHUB_ENV
+          echo "n=rajatenv" >> $GITHUB_ENV
+          echo "l=bhawsarenv" >> $GITHUB_ENV
       - name: useparam
         run: |
           echo $n,$l
