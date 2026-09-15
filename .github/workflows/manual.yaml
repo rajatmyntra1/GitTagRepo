@@ -7,7 +7,7 @@ jobs:
       - name: manual
         run: |
           version=3
-          if [[ ${{var.major}} -gt $version ]]; then
+          if [[ ${{vars.major}} -gt $version ]]; then
             echo "major is greater than version"
           else
             echo "wrong result"
