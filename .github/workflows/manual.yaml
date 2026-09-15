@@ -4,7 +4,7 @@ jobs:
   jobA:
     runs-on: ubuntu-latest
     steps:
-      - name: : manual
+      - name: manual
         run: |
           version=3
           if [[ ${{var.major}} -gt $version ]]; then
