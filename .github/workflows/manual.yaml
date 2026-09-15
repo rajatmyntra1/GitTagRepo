@@ -7,7 +7,7 @@ jobs:
       - name: manual
         run: |
           if [[ 1 -eq 1 ]];then
-            IFS='.' read -r release_major release_minor <<< "3.0"
+            # IFS='.' read -r release_major release_minor <<< "3.0"
             if [[ ${{vars.major}} -gt release_major ]]; then
               echo "inside if"
             elif [[ $release_major -eq $release_minor ]];then
