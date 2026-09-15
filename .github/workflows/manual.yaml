@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: manual
         run: |
-          version=3
-          if [[ ${{vars.major}} -gt version ]]; then
+          IFS='.' read -r version1 version2 <<< "3.0"
+          if [[ ${{vars.major}} -gt version1 ]]; then
             echo "major is greater than version"
           else
             echo "wrong result"
