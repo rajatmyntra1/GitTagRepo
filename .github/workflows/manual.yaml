@@ -9,6 +9,8 @@ jobs:
           IFS='.' read -r version1 version2 <<< "3.0"
           if [[ ${{vars.major}} -gt version1 ]]; then
             echo "inside if"
+          elif [[ $version1 -eq $version2 ]];then
+            echo "equals"
           else
             echo "inside else"
           fi
