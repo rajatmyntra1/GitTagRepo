@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: task1
         run: |
-          if [[ ${{ github.head_ref == 'feature1' && ${{ github.base_ref == 'dev' }} ]];then
+          if [[ ${{ github.head_ref }} == 'feature1' && ${{ github.base_ref == 'dev' }} ]];then
             echo "target branch is dev"
           fi
             
