@@ -6,10 +6,10 @@ jobs:
     steps:
       - name: manual
         run: |
-          IFS='.' read -r version1 version2 <<< "3.0"
-          if [[ ${{vars.major}} -gt version1 ]]; then
+          IFS='.' read -r release_major release_minor <<< "3.0"
+          if [[ ${{vars.major}} -gt release_major ]]; then
             echo "inside if"
-          elif [[ $version1 -eq $version2 ]];then
+          elif [[ $release_major -eq $release_minor ]];then
             echo "equals"
           else
             echo "inside else"
