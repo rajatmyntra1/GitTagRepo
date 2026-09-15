@@ -1,0 +1,14 @@
+name: manual
+on: workflow_dispatch
+jobs:
+  jobA:
+    runs-on: ubuntu-latest
+    steps:
+      - name: : manual
+        run: |
+          version=3
+          if [[ ${{var.major}} -gt $version ]]; then
+            echo "major is greater than version"
+          else
+            echo "wrong result"
+          fi
