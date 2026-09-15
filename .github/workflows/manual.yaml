@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: manual
         run: |
-          IFS='.' read -r version1 version2 <<< "3.0"
-          if [[ ${{vars.major}} -gt version1 ]]; then
+          IFS='.' read -r version1 version2 <<< "2.0"
+          if [[ ${{vars.major}} -gt $version1 ]]; then
             echo "inside if"
           else
             echo "inside else"
