@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: task1
         run: |
-          if [[ ( a==b || ${{github.ref_name}} == release ) && ${{github.ref_name}} == main ]]; then
+          if [[ $(( a==b || ${{github.ref_name}} == release )) && ${{github.ref_name}} == main ]]; then
             echo "This is correct IF block"
           else
             echo "Wrong Block"
