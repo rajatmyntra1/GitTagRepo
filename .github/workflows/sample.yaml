@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: task1
         run: |
-          if [[ $(( a==b || ${{github.head_ref =='main'}} )) && {{github.head_ref == 'main'}} ]]; then
+          if [[ $(( a==b || ${{github.head_ref}} == 'main')) && {{github.head_ref == 'main'}} ]]; then
             echo "This is correct IF block"
           else
             echo "Wrong Block"
